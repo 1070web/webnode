@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var uglify = require("gulp-uglify"); //压缩js
 var sass = require("gulp-sass"); //编译sass
 var cleanCss = require("gulp-clean-css"); //压缩css
-// var webserver = require("gulp-webserver") //启动服务
+var webserver = require("gulp-webserver") //启动服务
 gulp.task("sass", function() {
     return gulp.src("src/scss/*.scss")
         .pipe(sass())
@@ -20,19 +20,19 @@ gulp.task("webserver", function() {
         }))
 });
 //压缩 css
-gulp.task("cleanCss", function() {
+gulp.task("css", function() {
     return gulp.src("src/css/*.css")
         .pipe(cleanCss())
         .pipe(gulp.dest("dist/css/"))
 });
 //压缩js
-gulp.task("uglify", function() {
+gulp.task("js", function() {
     return gulp.src("src/js/*.js")
         .pipe(uglify())
         .pipe(gulp.dest("dist/js/"))
 });
 //开发资源
-// gulp.task("dev", gulp.series("sass", "webserver", "watch"));
+gulp.task("dev", gulp.series("sass", "webserver", "watch"));
 
 //打包资源
-// gulp.task("build", gulp.series("js", "css"));
+gulp.task("build", gulp.parallel("js", "css"));
